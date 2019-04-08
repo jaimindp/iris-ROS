@@ -1,0 +1,8 @@
+prefix=/home/lilly/Desktop/ROSws/install
+
+Name: lillypkg
+Description: Description of lillypkg
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/lilly/Desktop/ROSws/install/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/lilly/Desktop/ROSws/install
+
+Name: irisbot
+Description: Description of irisbot
+Version: 0.0.0
+Cflags: -I/home/lilly/Desktop/ROSws/install/include
+Libs: -L/home/lilly/Desktop/ROSws/install/lib -lirisbot
+Requires: roscpp rospy std_msgs message_runtime

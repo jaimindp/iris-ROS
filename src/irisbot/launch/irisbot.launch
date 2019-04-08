@@ -1,0 +1,10 @@
+<launch>
+
+    <arg name="role"/>
+
+    <node pkg="irisbot" name="planner" type="planner.py" output="screen" args="$(arg role)"/>
+    <node pkg="irisbot" name="movement" type="movement.py" output="screen"/>
+    <node pkg="irisbot" name="communication_laptop" type="communication_laptop.py" output="screen"/>
+    <node pkg="irisbot" name="localization" type="localization.py" output="screen" />
+
+</launch>
