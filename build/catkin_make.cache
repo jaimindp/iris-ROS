@@ -1,2 +1,0 @@
-irisbot
--DCATKIN_DEVEL_PREFIX=/home/lilly/Desktop/irisbot_ROS/devel -DCMAKE_INSTALL_PREFIX=/home/lilly/Desktop/irisbot_ROS/install -G Unix Makefiles

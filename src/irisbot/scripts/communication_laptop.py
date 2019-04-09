@@ -5,21 +5,23 @@ import socket
 from std_msgs.msg import Bool, String
 from irisbot.msg import Pose, RotateCmd, DriveCmd
 
+
+
 class Communication_Laptop():
     def __init__(self):
         rospy.loginfo("starting communication_laptop")
         rospy.init_node('communication_laptop', disable_signals=True)
         self.pub_rotate = rospy.Publisher('rotate', RotateCmd, queue_size=10)
         self.pub_drive = rospy.Publisher('drive', DriveCmd, queue_size=10)
-        s = self.create_server_socket()
+        s = self.create_client_socket()
+        rospy.loginfo("connected to core.py")
 
         while not rospy.is_shutdown():
             connection = None
             try:
                 rospy.loginfo("listening for TCP data")
-                connection, address = s.accept()
+                data = s.recv(64)
                 rospy.loginfo("received TCP data")
-                data = connection.recv(64)
                 if not data:
                     break
                 cmd = eval(data.decode('utf-8'))
@@ -48,11 +50,10 @@ class Communication_Laptop():
         r.degrees, r.direction, r.speed = degrees, direction, speed
         self.pub_rotate.publish(r)
 
-    def create_server_socket(self):
-        rospy.loginfo("creating TCP server socket")
+    def create_client_socket(self):
+        rospy.loginfo("creating TCP client socket")
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind(('127.0.0.1', 3535))
-        s.listen(1)
+        s.connect(('localhost', COMM_PORT))
         return s
 
 if __name__ == '__main__':

@@ -1,10 +1,14 @@
 import socket
 import sys
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('127.0.0.1', 3535))
+COMM_PORT = 9000
 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind(('localhost', COMM_PORT))
+sock.listen(1)
+
+connection, addr = sock.accept()
 try:
-    s.sendall(str(sys.argv[1:]).encode('utf-8'))
+    connection.sendall(str(sys.argv[1:]).encode('utf-8'))
 finally:
-    s.close()
+    connection.close()
