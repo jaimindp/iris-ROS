@@ -7,6 +7,5 @@ planner (high level control), communication_laptop (TCP with core.py), localizat
 Communication laptop node is looking for commands of the form "rotate DEGREES DIRECTION SPEED" or "drive SPEED DISTANCE"
 
 # To Do
-Edit update.sh to pull irisbot_ROS instead of irisbot_python
-Test Docker-ize-ability
-Talk to Jaimin about interfacing
+- interface with irisbot docker (include new ROS-compatible update, kill, restart bash scripts)
+- resolve pathname to m3pi
