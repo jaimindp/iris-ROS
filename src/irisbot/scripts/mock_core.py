@@ -1,9 +1,10 @@
 import socket
 import sys
 
-COMM_PORT = 9000
+COMM_PORT = 9001
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.bind(('localhost', COMM_PORT))
 sock.listen(1)
 
@@ -12,3 +13,6 @@ try:
     connection.sendall(str(sys.argv[1:]).encode('utf-8'))
 finally:
     connection.close()
+    sock.close()
+connection.close()
+sock.close()

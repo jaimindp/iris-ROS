@@ -6,7 +6,7 @@ from std_msgs.msg import Bool, String
 from irisbot.msg import Pose, RotateCmd, DriveCmd
 import time
 
-COMM_PORT = 9000
+COMM_PORT = 9001
 
 class Communication_Laptop():
     def __init__(self):
@@ -14,32 +14,32 @@ class Communication_Laptop():
         rospy.init_node('communication_laptop', disable_signals=True)
         self.pub_rotate = rospy.Publisher('rotate', RotateCmd, queue_size=10)
         self.pub_drive = rospy.Publisher('drive', DriveCmd, queue_size=10)
-        s = None
-        while s is None:
-            s = self.create_client_socket()
-            time.sleep(1)
 
         rospy.loginfo("connected to core.py")
 
         while not rospy.is_shutdown():
-            connection = None
+            s = None
+            while s is None:
+                s = self.create_client_socket()
+                time.sleep(1)
             try:
-                rospy.loginfo("listening for TCP data")
                 data = s.recv(64)
                 rospy.loginfo("received TCP data")
                 if not data:
                     break
                 cmd = eval(data.decode('utf-8'))
+                if not cmd:
+                    break
                 if cmd[0] == 'rotate' and len(cmd) == 4:
                     self.rotate(degrees=int(cmd[1]), direction=int(cmd[2]), speed=int(cmd[3]))
                 elif cmd[0] == 'drive' and len(cmd) == 3:
                     self.drive(speed=int(cmd[1]), distance=int(cmd[2]))
                 else:
                     rospy.loginfo("Unknown command received from core.py")
-                connection.close()
+                s.close()
             except KeyboardInterrupt:
                 if connection:
-                    connection.close()
+                    s.close()
                 rospy.signal_shutdown("User killed communication_laptop node")
                 break
 
@@ -56,7 +56,6 @@ class Communication_Laptop():
         self.pub_rotate.publish(r)
 
     def create_client_socket(self):
-        rospy.loginfo("creating TCP client socket")
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.connect(('localhost', COMM_PORT))
