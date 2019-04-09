@@ -3,6 +3,10 @@
 import rospy
 import sys
 from std_msgs.msg import Bool
+import sys
+import os
+pathname = os.environ['HOME']
+sys.path.append(pathname)
 from irisbot.msg import *
 from irisbot.srv import *
 
