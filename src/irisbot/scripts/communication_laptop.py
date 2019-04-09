@@ -6,6 +6,7 @@ from std_msgs.msg import Bool, String
 from irisbot.msg import Pose, RotateCmd, DriveCmd
 import time
 
+COMM_PORT = 9000
 
 class Communication_Laptop():
     def __init__(self):
