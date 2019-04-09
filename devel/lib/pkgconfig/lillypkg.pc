@@ -1,8 +1,0 @@
-prefix=/home/lilly/Desktop/DockerSpace/devel
-
-Name: lillypkg
-Description: Description of lillypkg
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/lilly/Desktop/DockerSpace/devel/lib 
-Requires: 
